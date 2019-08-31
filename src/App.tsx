@@ -7,17 +7,26 @@ interface State {
   taskList: Array<Todo>;
 }
 
-const getTasks = (taskList: Array<Todo>) => {
-  const todoList: Array<Todo> = [];
-  const doneList: Array<Todo> = [];
+const getTasks = (taskList: Todo[]) => {
+  const todoList = [];
+  const doneList = [];
 
-  taskList.forEach(t => {
+  for (let t of taskList) {
     if (t.status === 'todo') {
       todoList.push(t);
-      return;
+      continue;
     }
     doneList.push(t);
-  });
+  }
+
+  // NOTE: Array#forEach を使うと型推論が効かない？
+  // taskList.forEach(t => {
+  //   if (t.status === 'todo') {
+  //     todoList.push(t);
+  //     return;
+  //   }
+  //   doneList.push(t);
+  // });
 
   return [todoList, doneList];
 };
